@@ -40,10 +40,100 @@ config switch
 config switch_vlan
 	option device 'switch0'
 	option vlan '1'
-	option ports '1 2 3 4 0t'
+	option vid '1'
+	option ports '0t'
 
 config switch_vlan
 	option device 'switch0'
 	option vlan '2'
-	option ports '5 0t'
+	option ports '0t 5'
+	option vid '2'
+
+config interface 'mgmt'
+	option proto 'static'
+	option netmask '255.255.255.0'
+	option ifname 'eth0.999'
+	option ipaddr '10.99.9.1'
+	option type 'bridge'
+
+config switch_vlan
+	option device 'switch0'
+	option vlan '3'
+	option ports '0t 4'
+	option vid '999'
+
+config switch_vlan
+	option device 'switch0'
+	option vlan '4'
+	option ports '0t 1'
+	option vid '100'
+
+config switch_vlan
+	option device 'switch0'
+	option vlan '5'
+	option ports '0t 2'
+	option vid '110'
+
+config switch_vlan
+	option device 'switch0'
+	option vlan '6'
+	option ports '0t 2t'
+	option vid '111'
+
+config switch_vlan
+	option device 'switch0'
+	option vlan '7'
+	option ports '0 3'
+	option vid '120'
+
+config switch_vlan
+	option device 'switch0'
+	option vlan '8'
+	option ports '0t'
+	option vid '121'
+
+config interface 'ch_000'
+	option proto 'static'
+	option ipaddr '10.0.0.1'
+	option netmask '255.255.255.0'
+
+config interface 'ch_001'
+	option proto 'static'
+	option ipaddr '10.0.1.1'
+	option netmask '255.255.255.0'
+
+config interface 'ch_002'
+	option proto 'static'
+	option ipaddr '10.0.2.1'
+	option netmask '255.255.255.0'
+
+config interface 'ch_100'
+	option ifname 'eth0.100'
+	option proto 'static'
+	option netmask '255.255.255.0'
+	option ipaddr '10.1.0.1'
+
+config interface 'ch_110'
+	option ifname 'eth0.110'
+	option proto 'static'
+	option ipaddr '10.1.10.0'
+	option netmask '255.255.255.0'
+
+config interface 'ch_111'
+	option ifname 'eth0.111'
+	option proto 'static'
+	option ipaddr '10.1.11.1'
+	option netmask '255.255.255.0'
+
+config interface 'ch_120'
+	option ifname 'eth0'
+	option proto 'static'
+	option ipaddr '10.1.20.1'
+	option netmask '255.255.255.0'
+
+config interface 'ch_121'
+	option ifname 'eth0.121'
+	option proto 'static'
+	option ipaddr '10.1.21.1'
+	option netmask '255.255.255.0'
 
