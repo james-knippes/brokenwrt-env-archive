@@ -1,0 +1,47 @@
+
+config defaults
+	option syn_flood '1'
+	option output 'ACCEPT'
+	option forward 'REJECT'
+	option input 'REJECT'
+
+config zone
+	option name 'lan'
+	list network 'lan'
+	option output 'ACCEPT'
+	option input 'REJECT'
+	option forward 'REJECT'
+
+config include
+	option path '/etc/firewall.user'
+
+config include 'miniupnpd'
+	option type 'script'
+	option path '/usr/share/miniupnpd/firewall.include'
+	option family 'any'
+	option reload '1'
+
+config rule
+	option dest_port '80'
+	option src 'lan'
+	option name 'lan_allow_http'
+	option target 'ACCEPT'
+	list dest_ip '10.1.20.10'
+	list proto 'tcp'
+
+config rule
+	option dest_port '443'
+	option src 'lan'
+	option name 'lan_allow_https'
+	option target 'ACCEPT'
+	list dest_ip '10.1.20.10'
+	list proto 'tcp'
+
+config rule
+	option dest_port '22'
+	option src 'lan'
+	option name 'lan_allow_ssh'
+	option target 'ACCEPT'
+	list dest_ip '10.1.20.10'
+	list proto 'tcp'
+
