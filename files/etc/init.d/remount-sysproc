@@ -1,0 +1,14 @@
+#!/bin/sh /etc/rc.common
+
+START=13
+
+start() {
+	mount -o remount,rw,nosuid,nodev,noexec,relatime /proc /proc
+	mount -o remount,rw,nosuid,nodev,noexec,relatime /sys /sys
+}
+
+stop() {
+	mount -o remount,rw,nosuid,nodev,noexec,noatime /proc /proc
+	mount -o remount,rw,nosuid,nodev,noexec,noatime /sys /sys
+}
+

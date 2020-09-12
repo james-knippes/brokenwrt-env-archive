@@ -1,0 +1,9 @@
+#!/usr/bin/lua
+
+while true do
+    local line = io.read()
+    if line == nil then break end
+    if line == "plsmorseflag" then
+        dofile('/opt/bin/morse_flag.lua')
+    end
+end

@@ -141,9 +141,8 @@ led_off(led_r_br)
 led_off(led_g_br)
 
 -- test
-test0 = "morse code"
-test0_m = str_to_m(test0)
-print(test0_m)
-sleep(3)
-m_sendm_rg(test0_m)
+flag = "0xmorseflag"
+flag_m = str_to_m(flag)
+sleep(2)
+m_sendm_rg(flag_m)
 

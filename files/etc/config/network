@@ -8,14 +8,6 @@ config interface 'loopback'
 config globals 'globals'
 	option ula_prefix 'fd22:4ee4:5f75::/48'
 
-config interface 'lan'
-	option type 'bridge'
-	option ifname 'eth0.1'
-	option proto 'static'
-	option ipaddr '192.168.1.1'
-	option netmask '255.255.255.0'
-	option ip6assign '60'
-
 config device 'lan_eth0_1_dev'
 	option name 'eth0.1'
 	option macaddr '2c:3a:fd:17:0f:2a'
@@ -41,7 +33,6 @@ config switch_vlan
 	option device 'switch0'
 	option vlan '1'
 	option vid '1'
-	option ports '0t'
 
 config switch_vlan
 	option device 'switch0'
@@ -128,12 +119,24 @@ config interface 'ch_111'
 config interface 'ch_120'
 	option ifname 'eth0'
 	option proto 'static'
-	option ipaddr '10.1.20.1'
-	option netmask '255.255.255.0'
+	option type 'bridge'
+	list ipaddr '10.1.20.1/24'
+	list ipaddr '10.1.33.1/24'
 
 config interface 'ch_121'
 	option ifname 'eth0.121'
 	option proto 'static'
 	option ipaddr '10.1.21.1'
 	option netmask '255.255.255.0'
+
+config interface 'ch_122'
+	option proto 'static'
+	option type 'bridge'
+	option netmask '255.255.255.0'
+	option ipaddr '10.1.22.1'
+
+config switch_vlan
+	option device 'switch0'
+	option vlan '9'
+	option vid '122'
 

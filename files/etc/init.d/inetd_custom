@@ -1,0 +1,70 @@
+#!/bin/sh /etc/rc.common
+# Example script
+# Copyright (C) 2007 OpenWrt.org
+# set -e
+
+START=50
+STOP=50
+
+EXTRA_COMMANDS="status";
+EXTRA_HELP="        status Current satus of inetd deamon";
+
+
+status() {
+        echo "inetd: status";
+        local inetd_pid;
+        inetd_pid=`cat /tmp/run/inetd.pid 2>/dev/null`;
+	if [ -n "${inetd_pid}" ]; then
+                if ( kill -0 ${inetd_pid} 2>/dev/null ); then
+                        echo "inetd: is running";
+                        return 1;
+                else
+                        echo "inetd: old inetd(${inetd_pid}) terminated unexpected";
+                fi
+	else
+		if ( killall -0 inetd 2>/dev/null ); then
+			echo "inetd: orphraned inetd instance still running";
+		else
+			echo "inetd: there is no running inetd instance";
+		fi
+        fi
+}
+
+start() {
+        echo "inetd: starting";
+	local inetd_pid;
+	inetd_pid=`cat /tmp/run/inetd.pid 2>/dev/null`;
+	if [ -n "${inetd_pid}" ]; then
+		if ( kill -0 ${inetd_pid} 2>/dev/null ); then
+			echo "inetd: aleady running";
+			return 1;
+		else
+			echo "inetd: old inetd(${inetd_pid}) terminated unexpected";
+			rm /tmp/run/inetd.pid;
+		fi
+	fi
+	inetd;
+        # commands to launch application
+}
+
+stop() {
+	echo "inetd: stopping";
+	local inetd_pid;
+	inetd_pid=`cat /tmp/run/inetd.pid 2>/dev/null`;
+        if [ -z "${inetd_pid}" ]; then
+		echo "inetd: no /tmp/run/inetd.pid";
+		echo "inetd: killing all remaining instances";
+		killall inetd 2>/dev/null;
+	else
+		if ( ! kill ${inetd_pid} ); then
+			echo "inetd: was terminated unexpected";
+			rm /tmp/run/inetd.pid;
+			echo "inetd: killing remaining sessions";
+			killall inetd 2>/dev/null;
+		else
+			echo "inetd: terminated inetd(${inetd_pid})";
+		fi
+	fi
+        # commands to kill application
+}
+

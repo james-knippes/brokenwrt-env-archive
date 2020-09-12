@@ -5,10 +5,10 @@ config system
 	option log_size '64'
 	option urandom_seed '0'
 	option zonename 'Europe/Berlin'
-	option cronloglevel '5'
 	option log_proto 'udp'
 	option conloglevel '8'
 	option timezone 'CET-1CEST,M3.5.0,M10.5.0/3'
+	option cronloglevel '9'
 
 config timeserver 'ntp'
 	list server '0.openwrt.pool.ntp.org'
@@ -32,4 +32,16 @@ config led 'led_lan'
 	option sysfs 'fritz4040:green:lan'
 	option trigger 'switch0'
 	option port_mask '0x1e'
+
+config led
+	option trigger 'none'
+	option sysfs 'fritz4040:amber:info'
+	option name 'info_amber_off'
+	option default '0'
+
+config led
+	option trigger 'none'
+	option sysfs 'fritz4040:red:info'
+	option name 'info_red_off'
+	option default '0'
 
