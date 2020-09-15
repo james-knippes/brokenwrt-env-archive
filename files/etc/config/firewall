@@ -6,12 +6,6 @@ config defaults
 	option input 'REJECT'
 
 config zone
-	option name 'lan'
-	option input 'ACCEPT'
-	option output 'ACCEPT'
-	option forward 'ACCEPT'
-
-config zone
 	option name 'wan'
 	option input 'REJECT'
 	option output 'ACCEPT'
@@ -19,10 +13,6 @@ config zone
 	option masq '1'
 	option mtu_fix '1'
 	option network 'wan wan6'
-
-config forwarding
-	option src 'lan'
-	option dest 'wan'
 
 config rule
 	option name 'Allow-DHCP-Renew'
@@ -119,19 +109,18 @@ config forwarding
 	option src 'mgmt'
 
 config rule
-	option src 'mgmt'
-	option name 'mgmt_allow_input'
-	option target 'ACCEPT'
-	list dest_ip '10.99.9.1'
-	list proto 'all'
-
-config rule
 	option dest_port '67-68'
 	option src 'mgmt'
 	option name 'mgmt_allow_dhcp'
 	option family 'ipv4'
 	option target 'ACCEPT'
 	list proto 'udp'
+
+config rule
+	option src 'mgmt'
+	option name 'mgmt_allow_input'
+	option target 'ACCEPT'
+	list proto 'all'
 
 config zone
 	option network 'ch_000'
@@ -162,6 +151,13 @@ config zone
 	option input 'REJECT'
 
 config zone
+	option network 'ch_101'
+	option input 'REJECT'
+	option forward 'REJECT'
+	option name 'ch_101'
+	option output 'ACCEPT'
+
+config zone
 	option network 'ch_110'
 	option forward 'REJECT'
 	option name 'ch_110'
@@ -189,20 +185,13 @@ config zone
 	option input 'REJECT'
 	option output 'REJECT'
 
-config include 'miniupnpd'
-	option type 'script'
-	option path '/usr/share/miniupnpd/firewall.include'
-	option family 'any'
-	option reload '1'
-
 config rule
-	option dest_port '5555'
-	option src 'ch_121'
-	option name 'ch_121_allow_morse'
-	list dest_ip '10.1.21.1'
+	option dest_port '67-68'
+	option src 'ch_100'
+	option name 'ch_100_allow_dhcp'
 	option target 'ACCEPT'
 	list proto 'udp'
-	list src_ip '10.1.21.0/24'
+	option family 'ipv4'
 
 config rule
 	option dest_port '80'
@@ -212,12 +201,63 @@ config rule
 	list dest_ip '10.1.0.1'
 	list proto 'tcp'
 
+config rule
+	option dest_port '7777'
+	option src 'ch_100'
+	option name 'ch_100_allow_ftp'
+	option target 'ACCEPT'
+	list dest_ip '10.1.0.1'
+	list proto 'tcp'
+
+config rule
+	option dest_port '7777'
+	option src 'ch_100'
+	option name 'ch_100_track_ftp'
+	option target 'HELPER'
+	list dest_ip '10.1.0.1'
+	option set_helper 'ftp'
+	list proto 'tcp'
+	option enabled '0'
+
 config zone
 	option network 'ch_122'
 	option input 'REJECT'
 	option forward 'REJECT'
 	option name 'ch_122'
 	option output 'ACCEPT'
+
+config rule
+	option src 'ch_100'
+	option name 'ch_100_allow_ftp_pasv'
+	option target 'ACCEPT'
+	list dest_ip '10.1.0.1'
+	option helper 'ftp'
+	option enabled '0'
+
+config rule
+	option src 'ch_100'
+	list dest_ip '10.1.0.1'
+	option target 'ACCEPT'
+	option dest_port '30000-50000'
+	list proto 'tcp'
+	list proto 'udp'
+	option name 'ch_100_allow_ftp_pasv_ports'
+
+config rule
+	option dest_port '443'
+	option src 'ch_110'
+	option name 'ch_110_allow_https'
+	option target 'ACCEPT'
+	list dest_ip '10.1.10.1'
+	list proto 'tcp'
+
+config rule
+	option dest_port '80'
+	option src 'ch_110'
+	option name 'ch_110_allow_http'
+	option target 'ACCEPT'
+	list dest_ip '10.1.10.1'
+	list proto 'tcp'
 
 config rule
 	option src 'ch_120'
@@ -234,6 +274,13 @@ config rule
 	option target 'ACCEPT'
 	list proto 'udp'
 
+config rule
+	option dest_port '53'
+	option src 'ch_120'
+	option name 'ch_120_allow_dns'
+	option target 'ACCEPT'
+	list dest_ip '10.1.20.1'
+
 config forwarding
 	option dest 'wan'
 	option src 'ch_120'
@@ -243,40 +290,167 @@ config forwarding
 	option src 'ch_100'
 
 config rule
+	option dest_port '5555'
+	option src 'ch_121'
+	option name 'ch_121_allow_morse'
+	list dest_ip '10.1.21.1'
+	option target 'ACCEPT'
+	list proto 'udp'
+	list src_ip '10.1.21.0/24'
+
+config forwarding
+	option dest 'wan'
+	option src 'ch_110'
+
+config include 'miniupnpd'
+	option type 'script'
+	option path '/usr/share/miniupnpd/firewall.include'
+	option family 'any'
+	option reload '1'
+
+config zone
+	option network 'cont_int'
+	option input 'REJECT'
+	option forward 'REJECT'
+	option name 'cont_int'
+	option output 'ACCEPT'
+
+config forwarding
+	option dest 'wan'
+	option src 'cont_int'
+
+config rule
 	option dest_port '67-68'
-	option src 'ch_100'
-	option name 'ch_100_allow_dhcp'
+	option src 'cont_int'
+	option name 'cont_int_allow_dhcp'
+	option family 'ipv4'
+	option target 'ACCEPT'
+	list proto 'udp'
+
+config rule
+	option dest_port '53'
+	option src 'cont_int'
+	option name 'cont_int_allow_dns'
+	option target 'ACCEPT'
+	list dest_ip '10.10.0.1'
+
+config rule
+	option dest_port '67-68'
+	option src 'ch_001'
+	option name 'ch_001_allow_dhcp'
+	option family 'ipv4'
+	option target 'ACCEPT'
+	list proto 'udp'
+
+config rule
+	option dest_port '53'
+	option src 'ch_001'
+	option name 'ch_001_allow_dns'
+	option target 'ACCEPT'
+	list dest_ip '10.0.1.1'
+
+config rule
+	option src 'ch_001'
+	option name 'ch_001_allow_icmp'
+	option target 'ACCEPT'
+	list dest_ip '10.0.1.1'
+	list proto 'icmp'
+
+config rule
+	option dest_port '80'
+	option src 'ch_001'
+	option name 'ch_001_allow_http'
+	option target 'ACCEPT'
+	list dest_ip '10.0.1.1'
+	list proto 'tcp'
+
+config rule
+	option dest_port '10001'
+	option src 'ch_001'
+	option name 'ch_001_allow_flag'
+	option target 'ACCEPT'
+	list dest_ip '10.0.1.1'
+	list proto 'tcp'
+
+config rule
+	option dest_port '67-68'
+	option src 'ch_002'
+	option name 'ch_002_allow_dhcp'
+	option family 'ipv4'
+	option target 'ACCEPT'
+	list proto 'udp'
+
+config rule
+	option dest_port '53'
+	option src 'ch_002'
+	option name 'ch_002_allow_dns'
+	list dest_ip '10.0.2.1'
+	option target 'ACCEPT'
+
+config rule
+	option dest_port '1337'
+	option src 'ch_002'
+	option name 'ch_002_allow_http_1337'
+	option target 'ACCEPT'
+	list dest_ip '10.0.2.1'
+	list proto 'tcp'
+
+config rule
+	option src 'ch_002'
+	option name 'ch_002_allow_icmp'
+	option target 'ACCEPT'
+	list dest_ip '10.0.2.1'
+	list proto 'icmp'
+
+config rule
+	option dest_port '67-68'
+	option src 'ch_110'
+	option name 'ch_110_allow_dhcp'
 	option target 'ACCEPT'
 	list proto 'udp'
 	option family 'ipv4'
 
 config rule
-	option dest_port '7777'
-	option src 'ch_100'
-	option name 'ch_100_allow_ftp'
+	option dest_port '53'
+	option src 'ch_110'
+	option name 'ch_110_allow_dns'
 	option target 'ACCEPT'
-	list dest_ip '10.1.0.1'
-	list proto 'tcp'
-	option enabled '0'
+	list dest_ip '10.1.10.1'
 
 config rule
-	option dest_port '7777'
-	option src 'ch_100'
-	option name 'ch_100_track_ftp'
-	option target 'HELPER'
-	list dest_ip '10.1.0.1'
-	option set_helper 'ftp'
+	option dest_port '8080'
+	option src 'cont_int'
+	option name 'ch_122_allow_flagsrv'
+	option target 'ACCEPT'
+	list dest_ip '10.10.0.1'
 	list proto 'tcp'
-	option enabled '0'
 
 config rule
-	option src 'ch_100'
-	option name 'ch_100_allow_input'
-	list dest_ip '10.1.0.1'
 	option target 'ACCEPT'
-	list proto 'all'
+	option name 'ch_101_allow_http_100'
+	option src 'ch_100'
+	list dest_ip '10.1.1.1'
+	list proto 'tcp'
+	option dest_port '80'
+
+config rule
+	option target 'ACCEPT'
+	list proto 'icmp'
+	option name 'ch_101_allow_icmp'
+	option src 'ch_101'
 
 config forwarding
-	option dest 'wan'
-	option src 'ch_110'
+	option dest 'ch_100'
+	option src 'ch_101'
+
+config forwarding
+	option dest 'ch_101'
+	option src 'ch_100'
+
+config rule
+	option dest_port '53'
+	option src 'ch_100'
+	option name 'ch_100_allow_dns'
+	option target 'ACCEPT'
+	list dest_ip '10.1.0.1'
 

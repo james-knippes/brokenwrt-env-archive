@@ -1,0 +1,8 @@
+#!/bin/sh
+
+if [ "$ACTION" = "pressed" -a "$BUTTON" = "wps" ]; then
+	logger wps button pressed. gandalf service starting
+	socat -T60 -t3 TCP-LISTEN:9999,reuseaddr,bind=10.0.2.1 EXEC:'/opt/bin/ch_002_gandalf.lua'
+fi
+
+return 0

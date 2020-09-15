@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h3>Hello, this is BrokenWrt</h3>
+<p>A vulnerable Router Firmware designed to exercise network attacks.<br>
+I've hidden some flags for you. Some are easy to find. Others may be harder to get.</p>
+
+<p>As this is a development build there are some rules/infos/tips:<br>
+- don't plug into the management port => lan 4 . there is nothing to gain.<br>
+- don't unplug the usb sticks.<br>
+- lan ports 1-3 contain multiple challenges (NAME:ch_1XX) <br>
+- there are two(/three?) wifi challenges (SSID:ch_00X) <br>
+- when you get into the container don't try to break it/out<br>
+- when you want internet plug an uplink into the wan port<br>
+- you may intercept/mitm traffic from the wan port if needed<br>
+- besides the flags there are often some hints for other challenges<br>
+- take note of evey information you find. it may be helpfull later<br>
+- don't boot the router into failsafe mode<br>
+</p>
+
+<p>In good judo manner our safeword for this challenge will be 'Matte' ("mah-teh").<br>
+Whenever you read "Matte: $something" you should follow the instructions to have a smooth experience.<br></p>
+
+<p>Flags to find:<br>
+flag000 = flag0x[...]F125<br>
+flag001 = flag0x[...]40E3<br>
+flag002 = flag0x[...]2D66<br>
+flag100 = flag0x[...]DC8A<br>
+flag101 = flag0x[...]88C0<br>
+flag110 = flag0x[...]46C0<br>
+flag111 = flag0x[...]7317<br>
+flag120 = flag0x[...]F3C5<br>
+flag121 = flag0x[...]8072<br>
+flag122 = flag0x[...]BDF1<br>
+</p>
+</body>
+</html> 

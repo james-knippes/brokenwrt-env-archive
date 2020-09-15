@@ -111,6 +111,26 @@ config uhttpd main
 	# resources.
 #	list httpauth prefix_user
 
+config uhttpd ch_001
+        list listen_http        10.0.1.1:80
+        option home             /ch/001/www/
+        option rfc1918_filter   1
+        option max_requests     3
+        option max_connections  100
+        option network_timeout  30
+        option http_keepalive   20
+        option tcp_keepalive    1
+
+config uhttpd ch_002
+        list listen_http        10.0.2.1:1337
+        option home             /ch/002/www/
+        option rfc1918_filter   1
+        option max_requests     3
+        option max_connections  100
+        option network_timeout  30
+        option http_keepalive   20
+        option tcp_keepalive    1
+
 config uhttpd ch_100
 	list listen_http        10.1.0.1:80
 	option home             /ch/100/www/
@@ -120,6 +140,42 @@ config uhttpd ch_100
 	option network_timeout  30
 	option http_keepalive   20
 	option tcp_keepalive    1
+
+config uhttpd ch_101
+        list listen_http        10.1.1.1:80
+        option home             /ch/101/www/
+        option rfc1918_filter   1
+        option max_requests     3
+        option max_connections  100
+        option network_timeout  30
+        option http_keepalive   20
+        option tcp_keepalive    1
+
+config uhttpd ch_110
+        list listen_http        10.1.10.1:80
+        list listen_https       10.1.10.1:443
+        option cert             /etc/uhttpd.crt
+        option key              /etc/uhttpd.key
+        option home             /ch/110/www/
+	option redirect_https   1
+	option no_dirlists	1
+        option rfc1918_filter   1
+        option max_requests     3
+        option max_connections  100
+        option network_timeout  30
+        option http_keepalive   20
+        option tcp_keepalive    1
+
+config uhttpd ch_122
+        list listen_http        10.10.0.1:8080
+        option home             /ch/122/www/
+        option cgi_prefix       /cgi-bin
+        option rfc1918_filter   1
+        option max_requests     3
+        option max_connections  100
+        option network_timeout  30
+        option http_keepalive   20
+        option tcp_keepalive    1
 
 # Defaults for automatic certificate and key generation
 config cert defaults

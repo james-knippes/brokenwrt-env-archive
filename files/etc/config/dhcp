@@ -86,3 +86,9 @@ config dhcp 'ch_122'
 	option limit '150'
 	option interface 'ch_122'
 
+config dhcp 'cont_int'
+	option start '100'
+	option leasetime '12h'
+	option limit '150'
+	option interface 'cont_int'
+

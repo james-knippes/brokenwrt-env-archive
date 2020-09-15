@@ -1,0 +1,8 @@
+don't make the same error twice.
+
+sadly i have no flag for you.
+but i have some inside information.
+
+somewhere there is the BrokenWrtE router.
+the the authentication was removed from the network diagnostics page.
+so eveyone could ping test and traceroute.

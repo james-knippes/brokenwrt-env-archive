@@ -1,6 +1,13 @@
 #!/usr/bin/lua
 require "socket"
 
+if #arg < 1 then
+  print("usage: morse_led.lua $filetomorse")
+  os.exit(1)
+end
+
+local file = io.open(arg[1])
+
 -- set/caclulate delays
 local t_dot = 0.6
 local t_dash = t_dot * 3
@@ -141,8 +148,9 @@ led_off(led_r_br)
 led_off(led_g_br)
 
 -- test
-flag = "0xmorseflag"
-flag_m = str_to_m(flag)
+flag = file:read("*l")
+-- print(flag)
+flag_m = str_to_m(flag:lower())
 sleep(2)
+-- print(flag_m)
 m_sendm_rg(flag_m)
-

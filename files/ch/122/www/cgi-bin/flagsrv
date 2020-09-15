@@ -1,0 +1,27 @@
+#!/usr/bin/lua
+
+current = os.time()
+amfe = os.time{year=2029, month=1, day=1, hour=0}
+mercury = os.time{year=2032, month=11, day=13, hour=6}
+local file = io.open("/ch/122/flag122", "r")
+
+--release = os.time{year=2270, month=1, day=1, hour=0}
+
+io.write("Content-type: Text/html\n\n")
+io.write("This is the astronomical flag release server.<br><br>\n")
+io.write("The flag will be available after 'A Message from Earth' reaches Gliese 581c.<br>\n")
+io.write("But it will only be there until the next 'Transit of Mercury'.<br><br>\n")
+if current > amfe and current < mercury then
+  io.write("So as it is: " .. os.date("%c",current) .. "<br>\n")
+  io.write("Here is your flag: <br>\n")
+  io.write(file:read("*a"))
+  io.write("<br>\n")
+else
+  io.write("That seems not to be the case. I believe it is just: " .. os.date("%c",current) .. "<br>\n")
+  io.write("Maybe I should ask the internet about that...<br>\n")
+  os.execute("/etc/init.d/sysntpd restart")
+  io.write("<br><br><br>Matte: please don't DOS this service. so no spamming F5. TODO: implement timeout<br>\n")
+end
+-- io.write("amfe : " .. amfe .. "<br>\n")
+-- io.write("mercury : " .. mercury .. "<br>\n")
+io.close()
