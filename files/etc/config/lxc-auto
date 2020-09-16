@@ -1,0 +1,12 @@
+#config container
+        #option name container1
+        #option timeout 300
+        #list command '/bin/command --option'
+
+config container
+        option name f4040_bwrt001e_00
+        option timeout 60
+
+config container
+        option name f4040_bwrt001c_00
+        option timeout 120
