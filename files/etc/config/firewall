@@ -65,3 +65,8 @@ config rule
         option name 'ch_110_allow_icmp'
         option src 'lclient'
 
+config rule
+        option target 'ACCEPT'
+        list proto 'icmp'
+        option name 'ch_00x_allow_icmp'
+        option src 'wclient'
