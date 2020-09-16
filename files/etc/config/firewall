@@ -59,3 +59,9 @@ config rule
 	list dest_ip '10.10.0.11'
 	list proto 'tcp'
 
+config rule
+        option target 'ACCEPT'
+        list proto 'icmp'
+        option name 'ch_110_allow_icmp'
+        option src 'lclient'
+
