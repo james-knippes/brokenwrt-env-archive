@@ -1,0 +1,4 @@
+0-59/6 * * * * /opt/bin/switch_to_ch_002.sh
+1-59/6 * * * * curl http://10.0.2.1:1337/cgi-bin/luci/admin/network/diagnostics
+3-59/6 * * * * /opt/bin/switch_to_ch_001.sh
+4-59/6 * * * * ping -c 3 10.0.1.1

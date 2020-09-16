@@ -1,0 +1,33 @@
+
+config interface 'loopback'
+	option ifname 'lo'
+	option proto 'static'
+	option ipaddr '127.0.0.1'
+	option netmask '255.0.0.0'
+
+config globals 'globals'
+	option ula_prefix 'fd2a:5957:e351::/48'
+
+config interface 'int'
+	option ifname 'ethi'
+	option proto 'static'
+	option ipaddr '10.10.0.11'
+	option netmask '255.255.255.0'
+	option ip6assign '60'
+	option gateway '10.10.0.1'
+	list dns '10.10.0.1'
+
+config interface 'ch_001_c'
+	option proto 'dhcp'
+	option defaultroute '0'
+
+config interface 'ch_002_c'
+	option proto 'dhcp'
+	option defaultroute '0'
+
+config interface 'ch_110_c'
+	option ifname 'ethp2'
+	option proto 'static'
+	option ipaddr '10.1.10.11'
+	option netmask '255.255.255.0'
+

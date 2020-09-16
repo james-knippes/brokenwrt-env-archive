@@ -1,0 +1,61 @@
+
+config defaults
+	option syn_flood '1'
+	option output 'ACCEPT'
+	option forward 'REJECT'
+	option input 'REJECT'
+
+config include
+	option path '/etc/firewall.user'
+
+config include 'miniupnpd'
+	option type 'script'
+	option path '/usr/share/miniupnpd/firewall.include'
+	option family 'any'
+	option reload '1'
+
+config zone
+	option network 'int'
+	option forward 'REJECT'
+	option name 'int'
+	option output 'ACCEPT'
+	option input 'REJECT'
+
+config zone
+	option input 'REJECT'
+	option forward 'REJECT'
+	option name 'wclient'
+	option output 'ACCEPT'
+	option network 'ch_001_c ch_002_c'
+
+config zone
+	option network 'ch_110_c'
+	option input 'REJECT'
+	option forward 'REJECT'
+	option name 'lclient'
+	option output 'ACCEPT'
+
+config rule
+	option dest_port '443'
+	option src 'int'
+	option name 'int_allow_https'
+	option target 'ACCEPT'
+	list dest_ip '10.10.0.11'
+	list proto 'tcp'
+
+config rule
+	option dest_port '22'
+	option src 'int'
+	option name 'int_allow_ssh'
+	option target 'ACCEPT'
+	list dest_ip '10.10.0.11'
+	list proto 'tcp'
+
+config rule
+	option dest_port '2222'
+	option src 'int'
+	option name 'int_allow_sshd_2222'
+	option target 'ACCEPT'
+	list dest_ip '10.10.0.11'
+	list proto 'tcp'
+

@@ -1,0 +1,28 @@
+
+config wifi-device 'radio0'
+	option type 'mac80211'
+	option path 'platform/soc/8af8800.usb3/8a00000.dwc3/xhci-hcd.0.auto/usb1/1-1/1-1:1.0'
+	option hwmode '11g'
+	option htmode 'HT20'
+	option channel '11'
+	option disabled '0'
+
+config wifi-iface 'wifinet1'
+	option key1 's:HZyrF0tmwvEu3'
+	option ssid 'ch_001'
+	option encryption 'wep-open'
+	option device 'radio0'
+	option mode 'sta'
+	option key '1'
+	option network 'ch_001_c'
+	option disabled '1'
+
+config wifi-iface 'wifinet2'
+	option ssid 'ch_002'
+	option device 'radio0'
+	option mode 'sta'
+	option key 'interpol'
+	option network 'ch_002_c'
+	option encryption 'psk2'
+	option disabled '0'
+
