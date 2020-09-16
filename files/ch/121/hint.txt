@@ -1,0 +1,55 @@
+Here we are.
+
+So there is still a secured vlan, which you can't access the normal way.
+It's Subnet is 10.1.21.0/24. The Network is completely isolated by the firewall.
+So there is no official way in or out. (no input/forward/output)
+But on 10.1.21.1 there is a simple UDP service listening on port 5555.
+When you send it the "$password\n" it will morse you the flag back ;)
+Maybe you can 'vlan hop' your way in somehow?
+
+The Network/Switch Layout looks like this:
+______________________________________________________
+
+Legend:
+t => tagged
+u => untagged
+
+Notice:
+The switch also accepts tagged packets on untagged ports.
+But the tag has to match a/the VID of the given port or be a priority tag.
+If it is the wrong VID the packet will just be dropped.
+The switch also doesn't care what the packet content is.
+Even if starts with another Tag.
+______________________________________________________
+           | VIDs | VIDs | VIDs | VIDs | VIDs | VIDs |
+           | 100t | 100u |      |      |  ??  |      |
+switch     | 110t |      | 110u |      |  ??  |      |
+^^^^^^     | 111t |      | 111t |      |  ??  |      |
+           | 120u |      |      | 120u |  ??  |      |
+           |   2t |      |      |      |  ??  | 2t   |
+___________|[CPU]_|_[L1]_|_[L2]_|_[L3]_|_[L4]_|_[WAN]|
+              ||                                      
+              ||                                      
+              ||                                      
+              ||                                      
+              ||                                      
+              || TRUNK LINK                           
+              || VID 120 = native vlan                
+              || other VIDs = tagged                  
+              ||                                      
+              ||                                      
+______________||_____________________________________ 
+           |[CPU] |                                  |
+           | 100t |                                  |
+router     | 110t |                                  |
+^^^^^^     | 111t |                                  |
+           | 120u |                                  |
+           | 121t | > secret vlan                    |
+___________|______|__________________________________|
+
+
+This is too hard. Give me a hint:
+TBBTYR: iyna ubccvat, qbhoyr gnttvat, fpncl
+
+Still not doable. Recite the solution to me:
+fraqc(Rgure(???)/Qbg1D(???)/Qbg1D(???)/VC(???)/HQC(???)/"$CNFFJBEQ\a")
