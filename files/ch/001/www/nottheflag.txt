@@ -1,3 +1,3 @@
-yeah it's not here. grabbing the banner should be enough.
+sadly the flag is really not here. but grabbing the banner should be enough.
 
-Also I probably shouldn't use my old myspace password for the (only?) other wifi?
+Tip: don't use an old MySpace password as wpa-psk
